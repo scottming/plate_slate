@@ -3,8 +3,8 @@ defmodule PlateSlate.Repo.Migrations.CreateItemTags do
 
   def change do
     create table(:item_tags) do
+      add :name, :string, null: false
       add :description, :string
-      add :name, :string
 
       timestamps()
     end
