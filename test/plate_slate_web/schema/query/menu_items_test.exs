@@ -12,7 +12,6 @@ defmodule PlateSlateWeb.Schema.Query.MenuItemsTest do
     }
   }
   """
-
   test "menuItems field returns menu items" do
     conn = build_conn()
     conn = get conn, "/api", query: @query
@@ -34,6 +33,24 @@ defmodule PlateSlateWeb.Schema.Query.MenuItemsTest do
           %{"name" => "Masala Chai"},
           %{"name" => "Vanilla Milkshake"},
           %{"name" => "Chocolate Milkshake"},
+        ]
+      }
+    }
+  end
+
+  @query """
+  {
+    menuItems(matching: "reu") {
+      name
+    }
+  }
+  """
+  test "menuItems field returns menu itesms filtered by name" do
+    response = get(build_conn(), "/api", query: @query)
+    assert json_response(response, 200) == %{
+      "data" => %{
+        "menuItems" => [
+          %{"name" => "Reuben"},
         ]
       }
     }

@@ -116,7 +116,6 @@ defmodule PlateSlate.Menu do
   def list_items(%{matching: name}) when is_binary(name) do
     Item
     |> where([m], ilike(m.name, ^"%#{name}%"))
-    |> IO.inspect
     |> Repo.all
   end
 
