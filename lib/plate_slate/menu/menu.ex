@@ -197,4 +197,100 @@ defmodule PlateSlate.Menu do
   def change_item(%Item{} = item) do
     Item.changeset(item, %{})
   end
+
+  alias PlateSlate.Menu.ItemTag
+
+  @doc """
+  Returns the list of item_tags.
+
+  ## Examples
+
+      iex> list_item_tags()
+      [%ItemTag{}, ...]
+
+  """
+  def list_item_tags do
+    Repo.all(ItemTag)
+  end
+
+  @doc """
+  Gets a single item_tag.
+
+  Raises `Ecto.NoResultsError` if the Item tag does not exist.
+
+  ## Examples
+
+      iex> get_item_tag!(123)
+      %ItemTag{}
+
+      iex> get_item_tag!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_item_tag!(id), do: Repo.get!(ItemTag, id)
+
+  @doc """
+  Creates a item_tag.
+
+  ## Examples
+
+      iex> create_item_tag(%{field: value})
+      {:ok, %ItemTag{}}
+
+      iex> create_item_tag(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_item_tag(attrs \\ %{}) do
+    %ItemTag{}
+    |> ItemTag.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a item_tag.
+
+  ## Examples
+
+      iex> update_item_tag(item_tag, %{field: new_value})
+      {:ok, %ItemTag{}}
+
+      iex> update_item_tag(item_tag, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_item_tag(%ItemTag{} = item_tag, attrs) do
+    item_tag
+    |> ItemTag.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a ItemTag.
+
+  ## Examples
+
+      iex> delete_item_tag(item_tag)
+      {:ok, %ItemTag{}}
+
+      iex> delete_item_tag(item_tag)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_item_tag(%ItemTag{} = item_tag) do
+    Repo.delete(item_tag)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking item_tag changes.
+
+  ## Examples
+
+      iex> change_item_tag(item_tag)
+      %Ecto.Changeset{source: %ItemTag{}}
+
+  """
+  def change_item_tag(%ItemTag{} = item_tag) do
+    ItemTag.changeset(item_tag, %{})
+  end
 end

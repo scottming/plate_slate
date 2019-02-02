@@ -128,4 +128,65 @@ defmodule PlateSlate.MenuTest do
       assert %Ecto.Changeset{} = Menu.change_item(item)
     end
   end
+
+  describe "item_tags" do
+    alias PlateSlate.Menu.ItemTag
+
+    @valid_attrs %{description: "some description", name: "some name"}
+    @update_attrs %{description: "some updated description", name: "some updated name"}
+    @invalid_attrs %{description: nil, name: nil}
+
+    def item_tag_fixture(attrs \\ %{}) do
+      {:ok, item_tag} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Menu.create_item_tag()
+
+      item_tag
+    end
+
+    test "list_item_tags/0 returns all item_tags" do
+      item_tag = item_tag_fixture()
+      assert Menu.list_item_tags() == [item_tag]
+    end
+
+    test "get_item_tag!/1 returns the item_tag with given id" do
+      item_tag = item_tag_fixture()
+      assert Menu.get_item_tag!(item_tag.id) == item_tag
+    end
+
+    test "create_item_tag/1 with valid data creates a item_tag" do
+      assert {:ok, %ItemTag{} = item_tag} = Menu.create_item_tag(@valid_attrs)
+      assert item_tag.description == "some description"
+      assert item_tag.name == "some name"
+    end
+
+    test "create_item_tag/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Menu.create_item_tag(@invalid_attrs)
+    end
+
+    test "update_item_tag/2 with valid data updates the item_tag" do
+      item_tag = item_tag_fixture()
+      assert {:ok, %ItemTag{} = item_tag} = Menu.update_item_tag(item_tag, @update_attrs)
+      assert item_tag.description == "some updated description"
+      assert item_tag.name == "some updated name"
+    end
+
+    test "update_item_tag/2 with invalid data returns error changeset" do
+      item_tag = item_tag_fixture()
+      assert {:error, %Ecto.Changeset{}} = Menu.update_item_tag(item_tag, @invalid_attrs)
+      assert item_tag == Menu.get_item_tag!(item_tag.id)
+    end
+
+    test "delete_item_tag/1 deletes the item_tag" do
+      item_tag = item_tag_fixture()
+      assert {:ok, %ItemTag{}} = Menu.delete_item_tag(item_tag)
+      assert_raise Ecto.NoResultsError, fn -> Menu.get_item_tag!(item_tag.id) end
+    end
+
+    test "change_item_tag/1 returns a item_tag changeset" do
+      item_tag = item_tag_fixture()
+      assert %Ecto.Changeset{} = Menu.change_item_tag(item_tag)
+    end
+  end
 end
