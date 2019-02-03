@@ -18,21 +18,21 @@ defmodule PlateSlateWeb.Schema.Query.MenuItemsTest do
     assert json_response(conn, 200) == %{
       "data" => %{
         "menuItems" => [
-          %{"name" => "Reuben"},
-          %{"name" => "Croque Monsieur"},
-          %{"name" => "Muffuletta"},
           # Rest of items
           %{"name" => "Bánh mì"},
-          %{"name" => "Vada Pav"},
+          %{"name" => "Chocolate Milkshake"},
+          %{"name" => "Croque Monsieur"},
           %{"name" => "French Fries"},
-          %{"name" => "Papadum"},
-          %{"name" => "Pasta Salad"},
-          %{"name" => "Water"},
-          %{"name" => "Soft Drink"},
           %{"name" => "Lemonade"},
           %{"name" => "Masala Chai"},
+          %{"name" => "Muffuletta"},
+          %{"name" => "Papadum"},
+          %{"name" => "Pasta Salad"},
+          %{"name" => "Reuben"},
+          %{"name" => "Soft Drink"},
+          %{"name" => "Vada Pav"},
           %{"name" => "Vanilla Milkshake"},
-          %{"name" => "Chocolate Milkshake"},
+          %{"name" => "Water"},
         ]
       }
     }
