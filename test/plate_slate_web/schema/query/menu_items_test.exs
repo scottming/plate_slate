@@ -40,7 +40,7 @@ defmodule PlateSlateWeb.Schema.Query.MenuItemsTest do
 
   @query """
   {
-    menuItems(matching: "reu") {
+    menuItems(filter: {name: "reu"}) {
       name
     }
   }
@@ -58,7 +58,7 @@ defmodule PlateSlateWeb.Schema.Query.MenuItemsTest do
 
   @query """
   {
-    menuItems(matching: 123) {
+    menuItems(filter: {name: 123}) {
       name
     }
   }
@@ -68,7 +68,7 @@ defmodule PlateSlateWeb.Schema.Query.MenuItemsTest do
     assert %{"errors" => [
       %{"message" => message}
     ]} = json_response(response, 200)
-    assert message == "Argument \"matching\" has invalid value 123."
+    assert message == "Argument \"filter\" has invalid value {name: 123}.\nIn field \"name\": Expected type \"String\", found 123."
   end
 
 end
