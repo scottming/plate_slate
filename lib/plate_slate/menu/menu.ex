@@ -197,6 +197,7 @@ defmodule PlateSlate.Menu do
 
   """
   def create_item(attrs \\ %{}) do
+
     %Item{}
     |> Item.changeset(attrs)
     |> Repo.insert()

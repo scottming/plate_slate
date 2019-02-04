@@ -13,4 +13,12 @@ defmodule PlateSlateWeb.Resolvers.Menu do
     query = Ecto.assoc(category, :items)
     {:ok, PlateSlate.Repo.all(query)}
   end
+
+  def create_item(_, %{input: params}, _) do
+    case Menu.create_item(params) do
+      {:error, _} -> {:error, "Counld not create menu item"}
+      {:ok, _} = success -> success
+    end
+  end
+
 end
