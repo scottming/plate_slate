@@ -46,7 +46,7 @@ defmodule PlateSlate.Seeds do
       |> Repo.insert!
 
     _bahn_mi =
-      %Menu.Item{name: "Bánh mì", price: 4.50, category: sandwiches}
+      %Menu.Item{name: "BÃ¡nh mÃ¬", price: 4.50, category: sandwiches}
       |> Repo.insert!
 
     _vada_pav =
@@ -70,6 +70,17 @@ defmodule PlateSlate.Seeds do
     _pasta_salad =
       %Menu.Item{name: "Pasta Salad", price: 2.50, category: sides}
       |> Repo.insert!
+
+    category = Repo.get_by(Menu.Category, name: "Sides")
+    %Menu.Item{
+      name: "Thai Salad",
+      price: 3.50,
+      category: category,
+      allergy_info: [
+        %{"allergen" => "Peanuts", "severity" => "Contains"},
+        %{"allergen" => "Shell Fish", "severity" => "Shared Equipment"},
+      ]
+    } |> Repo.insert!
 
     #
     # BEVERAGES
