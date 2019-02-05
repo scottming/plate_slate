@@ -26,6 +26,7 @@ defmodule PlateSlateWeb.Schema do
 
   import_types __MODULE__.MenuTypes
   import_types __MODULE__.OrderingTypes
+  import_types __MODULE__.AccountsTypes
 
   query do
     @desc "The list of available items on the menu"
@@ -43,6 +44,13 @@ defmodule PlateSlateWeb.Schema do
   end
 
   mutation do
+    field :login, :session do
+      arg :email, non_null(:string)
+      arg :password, non_null(:string)
+      arg :role, non_null(:role)
+      resolve &Resolvers.Accounts.login/3
+    end
+
     field :place_order, :order_result do
       arg :input, non_null(:place_order_input)
       resolve &Resolvers.Ordering.place_order/3
