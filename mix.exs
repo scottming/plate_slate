@@ -37,7 +37,8 @@ defmodule PlateSlate.MixProject do
       {:phoenix, "~> 1.4.0"},
       {:phoenix_pubsub, "~> 1.1"},
       {:phoenix_ecto, "~> 4.0"},
-      {:ecto_sql, "~> 3.0"},
+      {:ecto, "~> 3.0.6", override: true},
+      {:ecto_sql, "~> 3.0.5"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
@@ -48,6 +49,8 @@ defmodule PlateSlate.MixProject do
       {:absinthe_plug, "~> 1.4.6"},
       {:absinthe_phoenix, "~> 1.4.3"},
       {:absinthe_relay, "~> 1.4.6"},
+      {:comeonin_ecto_password, "~> 2.2"},
+      {:pbkdf2_elixir, "~> 0.12.3"}
     ]
   end
 
