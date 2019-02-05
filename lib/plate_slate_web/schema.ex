@@ -39,6 +39,12 @@ defmodule PlateSlateWeb.Schema do
     end
   end
 
+  subscription do
+    field :new_order, :order do
+      config fn _args, _info -> {:ok, topic: "*"} end
+    end
+  end
+
   scalar :date do
     parse(fn input ->
       case Date.from_iso8601(input.value) do
