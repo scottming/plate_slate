@@ -1,7 +1,7 @@
 defmodule PlateSlate.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
-
+  alias PlateSlate.Accounts.User
 
   schema "users" do
     field :email, :string
@@ -13,7 +13,7 @@ defmodule PlateSlate.Accounts.User do
   end
 
   @doc false
-  def changeset(user, attrs) do
+  def changeset(%User{} = user, attrs) do
     user
     |> cast(attrs, [:name, :email, :password, :role])
     |> validate_required([:name, :email, :password, :role])
