@@ -8,6 +8,5 @@ defmodule PlateSlate.Repo.Migrations.CreateItemTags do
 
       timestamps()
     end
-
   end
 end

@@ -23,6 +23,7 @@ defmodule PlateSlateWeb.Schema.MenuTypes do
 
   interface :search_result do
     field :name, :string
+
     resolve_type(fn
       %PlateSlate.Menu.Item{}, _ -> :menu_item
       %PlateSlate.Menu.Category{}, _ -> :category

@@ -8,6 +8,5 @@ defmodule PlateSlate.Repo.Migrations.CreateCategories do
 
       timestamps()
     end
-
   end
 end

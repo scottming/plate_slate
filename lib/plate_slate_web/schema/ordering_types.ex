@@ -28,4 +28,3 @@ defmodule PlateSlateWeb.Schema.OrderingTypes do
     field :quantity, :integer
   end
 end
-

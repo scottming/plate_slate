@@ -49,11 +49,12 @@ defmodule PlateSlateWeb.Schema do
       arg :password, non_null(:string)
       arg :role, non_null(:role)
       resolve &Resolvers.Accounts.login/3
-      midddleware fn res, _ ->
+
+      midddleware(fn res, _ ->
         with %{value: %{user: user}} <- res do
           %{res | context: Map.put(res.context, :current_user, user)}
         end
-      end
+      end)
     end
 
     field :place_order, :order_result do
@@ -85,12 +86,16 @@ defmodule PlateSlateWeb.Schema do
         case context[:current_user] do
           %{role: "customer", id: id} ->
             {:ok, topic: id}
+
           %{role: "employee"} ->
             {:ok, topic: "*"}
+
           _ ->
             {:error, "unauthorized"}
         end
-        {:ok, topic: "*"} end
+
+        {:ok, topic: "*"}
+      end
     end
 
     field :update_order, :order do

@@ -117,7 +117,6 @@ defmodule PlateSlate.Menu do
     )
   end
 
-
   @doc """
   Returns the list of items.
 
@@ -197,7 +196,6 @@ defmodule PlateSlate.Menu do
 
   """
   def create_item(attrs \\ %{}) do
-
     %Item{}
     |> Item.changeset(attrs)
     |> Repo.insert()

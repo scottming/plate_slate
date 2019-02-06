@@ -3,7 +3,6 @@ defmodule PlateSlate.Menu.ItemTag do
   import Ecto.Changeset
   alias PlateSlate.Menu.ItemTag
 
-
   schema "item_tags" do
     field :description, :string
     field :name, :string, null: false
