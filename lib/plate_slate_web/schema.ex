@@ -50,7 +50,7 @@ defmodule PlateSlateWeb.Schema do
       arg :role, non_null(:role)
       resolve &Resolvers.Accounts.login/3
 
-      midddleware(fn res, _ ->
+      middleware(fn res, _ ->
         with %{value: %{user: user}} <- res do
           %{res | context: Map.put(res.context, :current_user, user)}
         end
@@ -93,8 +93,6 @@ defmodule PlateSlateWeb.Schema do
           _ ->
             {:error, "unauthorized"}
         end
-
-        {:ok, topic: "*"}
       end
     end
 
