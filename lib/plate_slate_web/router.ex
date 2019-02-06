@@ -24,14 +24,5 @@ defmodule PlateSlateWeb.Router do
       schema: PlateSlateWeb.Schema,
       socket: PlateSlateWeb.UserSocket
   end
-  # scope "/", PlateSlateWeb do
-  #   pipe_through :browser
 
-  #   get "/", PageController, :index
-  # end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", PlateSlateWeb do
-  #   pipe_through :api
-  # end
 end

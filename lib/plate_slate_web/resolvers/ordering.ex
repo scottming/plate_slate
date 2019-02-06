@@ -5,7 +5,6 @@ defmodule PlateSlateWeb.Resolvers.Ordering do
     place_order_input =
       case context[:current_user] do
         %{role: "customer", id: id} ->
-          IO.inspect([:id, id])
           Map.put(place_order_input, :customer_id, id)
 
         _ ->
@@ -13,7 +12,6 @@ defmodule PlateSlateWeb.Resolvers.Ordering do
       end
 
     with {:ok, order} <- Ordering.create_order(place_order_input) do
-      IO.inspect([:palce_order_input, place_order_input])
       Absinthe.Subscription.publish(PlateSlateWeb.Endpoint, order, new_order: [order.customer_id, "*"])
       {:ok, %{order: order}}
     end
