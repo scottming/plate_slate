@@ -29,6 +29,12 @@ defmodule PlateSlateWeb.Schema do
   import_types __MODULE__.AccountsTypes
 
   query do
+
+    field :me, :user do
+      middleware Middleware.Authorize, :any
+      resolve &Resolvers.Accounts.me/3
+    end
+
     @desc "The list of available items on the menu"
     field :menu_items, list_of(:menu_item) do
       arg :filter, :menu_item_filter
