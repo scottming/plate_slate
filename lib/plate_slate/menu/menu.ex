@@ -8,6 +8,13 @@ defmodule PlateSlate.Menu do
 
   alias PlateSlate.Menu.Category
 
+  def categories_by_id(_, ids) do
+    Category
+    |> where([c], c.id in ^Enum.uniq(ids))
+    |> Repo.all
+    |> Map.new(fn category -> {category.id, category} end)
+  end
+
   @doc """
   Returns the list of categories.
 
