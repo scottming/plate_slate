@@ -2,6 +2,7 @@ defmodule PlateSlateWeb.UserSocket do
   use Phoenix.Socket
   use Absinthe.Phoenix.Socket, schema: PlateSlateWeb.Schema
 
+  # transport(:websocket, Phoenix.Transports.WebSocket)
   ## Channels
   # channel "room:*", PlateSlateWeb.RoomChannel
 
@@ -16,8 +17,26 @@ defmodule PlateSlateWeb.UserSocket do
   #
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
-  def connect(_params, socket, _connect_info) do
+  # def connect(_params, socket, _connect_info) do
+  #   {:ok, socket}
+  # end
+
+  def connect(params, socket) do
+    current_user = current_user(params)
+
+    socket =
+      Absinthe.Phoenix.Socket.put_options(socket,
+        context: %{
+          current_user: current_user
+        }
+      )
+
     {:ok, socket}
+  end
+
+  defp current_user(%{"Authorization" => "Bearer " <> token}) do
+    {:ok, data} = PlateSlateWeb.Authentication.verify(token)
+    PlateSlate.Accounts.lookup(data.role, data.id)
   end
 
   # Socket id's are topics that allow you to identify all sockets for a given user:
