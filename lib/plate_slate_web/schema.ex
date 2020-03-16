@@ -10,33 +10,35 @@ defmodule PlateSlateWeb.Schema do
   use Absinthe.Schema
   alias PlateSlateWeb.Resolvers
   alias PlateSlateWeb.Schema.Middleware
+  import AbsintheErrorPayload.Payload
+  import_types AbsintheErrorPayload.ValidationMessageTypes
 
-  def middleware(middleware, field, object) do
-    middleware
-    |> apply(:errors, field, object)
-    |> apply(:get_string, field, object)
-    |> apply(:debug, field, object)
-  end
+  # def middleware(middleware, field, object) do
+  #   middleware
+  #   |> apply(:errors, field, object)
+  #   |> apply(:get_string, field, object)
+  #   |> apply(:debug, field, object)
+  # end
 
-  defp apply(middleware, :errors, _field, %{identifier: :mutation}) do
-    middleware ++ [Middleware.ChangesetErrors]
-  end
+  # defp apply(middleware, :errors, _field, %{identifier: :mutation}) do
+  #   middleware ++ [Middleware.ChangesetErrors]
+  # end
 
-  defp apply([], :get_string, field, %{identifier: :allergy_info}) do
-    [{Absinthe.Middleware.MapGet, to_string(field.identifier)}]
-  end
+  # defp apply([], :get_string, field, %{identifier: :allergy_info}) do
+  #   [{Absinthe.Middleware.MapGet, to_string(field.identifier)}]
+  # end
 
-  defp apply(middleware, :debug, _field, _object) do
-    if System.get_env("DEBUG") do
-      [{Middleware.Debug, :start}] ++ middleware
-    else
-      middleware
-    end
-  end
+  # defp apply(middleware, :debug, _field, _object) do
+  #   if System.get_env("DEBUG") do
+  #     [{Middleware.Debug, :start}] ++ middleware
+  #   else
+  #     middleware
+  #   end
+  # end
 
-  defp apply(middleware, _, _, _) do
-    middleware
-  end
+  # defp apply(middleware, _, _, _) do
+  #   middleware
+  # end
 
   import_types __MODULE__.MenuTypes
   import_types __MODULE__.OrderingTypes
@@ -92,12 +94,21 @@ defmodule PlateSlateWeb.Schema do
       resolve &Resolvers.Ordering.complete_order/3
     end
 
-    field :create_menu_item, :menu_item_result do
+    field :create_menu_item, :menu_item_payload do
       arg :input, non_null(:menu_item_input)
       middleware Middleware.Authorize, "employee"
       resolve &Resolvers.Menu.create_item/3
+      middleware &build_payload/2
+    end
+
+    field :create_menu_item_manual, :menu_item_payload do
+      arg :input, non_null(:menu_item_input)
+      middleware Middleware.Authorize, "employee"
+      resolve &Resolvers.Menu.create_item_manual/3
     end
   end
+
+  payload_object(:menu_item_payload, :menu_item)
 
   subscription do
     field :new_order, :order do

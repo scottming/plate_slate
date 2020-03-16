@@ -11,7 +11,7 @@ config :logger, level: :warn
 
 # Configure your database
 config :plate_slate, PlateSlate.Repo,
-  username: "scottming",
+  username: System.get_env("USER"),
   password: "",
   database: "plate_slate_test",
   hostname: "localhost",

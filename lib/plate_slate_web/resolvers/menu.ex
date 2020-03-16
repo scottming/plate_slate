@@ -1,5 +1,7 @@
 defmodule PlateSlateWeb.Resolvers.Menu do
   import Absinthe.Resolution.Helpers, only: [batch: 3]
+  import AbsintheErrorPayload.Payload
+  alias AbsintheErrorPayload.ValidationMessage
   alias PlateSlate.Menu
 
   def menu_items(_, args, _) do
@@ -20,12 +22,23 @@ defmodule PlateSlateWeb.Resolvers.Menu do
       categories ->
         {:ok, Map.get(categories, menu_item.category_id)}
     end)
-    |> IO.inspect()
   end
 
   def create_item(_, %{input: params}, _) do
     with {:ok, item} <- Menu.create_item(params) do
-      {:ok, %{menu_item: item}}
+      # {:ok, %{menu_item: item}}
+      {:ok, item}
+    else
+      _ -> {:error, "test error"}
+    end
+  end
+
+  def create_item_manual(_, %{input: params}, _) do
+    with {:ok, item} <- Menu.create_item(params) do
+      {:ok, success_payload(item)}
+    else
+      _ ->
+        {:ok, error_payload(%ValidationMessage{code: "test", message: "test error"})}
     end
   end
 end
